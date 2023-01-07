@@ -164,7 +164,7 @@
 #endif
 #ifndef USB_BO_CBW_SIZE
   #define USB_BO_CBW_SIZE       0x1F  // total length of command block CBW
-  #define USB_BO_CSW_SIZE			  0x0D  // total length of command status block CSW
+  #define USB_BO_CSW_SIZE       0x0D  // total length of command status block CSW
 #endif
 #ifndef USB_BO_CBW_SIG0
   #define USB_BO_CBW_SIG0       0x55  // command block CBW identification flag 'USBC'
