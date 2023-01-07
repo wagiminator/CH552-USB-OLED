@@ -1,5 +1,5 @@
-# USB-to-OLED - USB controlled OLED based on CH55xE
-USB-OLED is a simple USB controlled 128x64 pixels I2C OLED display. The CH552E or CH554E microcontroller builds a [USB Communication Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) for serial communication over USB, which can be used to transfer data from the PC to the OLED. An integrated buzzer offers the possibility of outputting acoustic signals.
+# USB-to-OLED - USB controlled OLED based on CH552E
+USB-OLED is a simple USB controlled 128x64 pixels I2C OLED display. The CH552E (or CH554E) microcontroller builds a [USB Communication Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) for serial communication over USB, which can be used to transfer data from the PC to the OLED. An integrated buzzer offers the possibility of outputting acoustic signals.
 
 ![USB_OLED_pic4.jpg](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_pic4.jpg)
 
