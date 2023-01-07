@@ -1,22 +1,22 @@
 # USB-controlled I²C OLED based on CH552E
 USB-OLED is a simple USB-controlled 128x64 pixels I2C OLED display. The CH552E (or CH554E) microcontroller builds a [USB Communication Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) for serial communication over USB, which can be used to transfer data from the PC to the OLED. An integrated buzzer offers the possibility of outputting acoustic signals.
 
-![USB_OLED_pic4.jpg](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_pic4.jpg)
+![USB_OLED_pic4.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic4.jpg)
 
 # Hardware
 ## Schematic
-![USB_OLED_wiring.png](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_wiring.png)
+![USB_OLED_wiring.png](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_wiring.png)
 
 ## CH552E 8-bit USB Device Microcontroller
 The CH552E is a low-cost, enhanced E8051 core MCU compatible with the MCS51 instruction set. It has an integrated USB controller with USB2.0 data transfer at full speed (12 Mbit/s) and supports up to 64 byte data packets with integrated FIFO and direct memory access (DMA). The CH552E has a factory built-in bootloader so firmware can be uploaded directly via USB without the need for an additional programming device.
 
-![USB_OLED_pic2.jpg](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_pic2.jpg)
+![USB_OLED_pic2.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic2.jpg)
 
 # Software
 ## CDC OLED Terminal
 This firmware implements a simple terminal for displaying text messages on the OLED. It can be use with any serial monitor on your PC. The integrated buzzer gives an acoustic signal for every message received.
 
-![USB_OLED_pic3.jpg](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_pic3.jpg)
+![USB_OLED_pic3.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic3.jpg)
 
 Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a CDC device.
@@ -34,7 +34,7 @@ This firmware implements a simple USB to I2C bridge. Any data transmission must 
 
 Two attached Python scripts show the PC-side implementation of the I2C bridge as an example. "bridge-demo.py" shows and scrolls an image, "bridge-conway.py" plays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) on the OLED.
 
-![USB_OLED_anim.gif](https://github.com/wagiminator/CH552-USB-OLED/blob/main/documentation/USB_OLED_anim.gif)
+![USB_OLED_anim.gif](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_anim.gif)
 
 Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a CDC device.
@@ -67,7 +67,7 @@ A brand new chip starts automatically in bootloader mode as soon as it is connec
 Open a terminal and navigate to the folder with the makefile. Run ```make flash``` to compile and upload the firmware. If you don't want to compile the firmware yourself, you can also upload the precompiled binary. To do this, just run ```python3 ./tools/chprog.py firmware.bin```.
 
 # References, Links and Notes
-1. [EasyEDA Design Files](https://oshwlab.com/wagiminator/ch552-USB2OLED)
+1. [EasyEDA Design Files](https://oshwlab.com/wagiminator/ch552-usb2oled)
 2. [CH551/552 Datasheet](http://www.wch-ic.com/downloads/CH552DS1_PDF.html)
 3. [SSD1306 Datasheet](https://cdn-shop.adafruit.com/datasheets/SSD1306.pdf)
 4. [SDCC Compiler](https://sdcc.sourceforge.net/)
