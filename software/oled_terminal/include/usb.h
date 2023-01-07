@@ -151,7 +151,7 @@
 #endif
 
 #ifndef USB_DEVICE_ADDR
-  #define	USB_DEVICE_ADDR			  0x02  // default USB device address
+  #define USB_DEVICE_ADDR       0x02  // default USB device address
 #endif
 #ifndef DEFAULT_ENDP0_SIZE
   #define DEFAULT_ENDP0_SIZE    8     // default maximum packet size for endpoint 0
@@ -163,8 +163,8 @@
   #define MAX_PACKET_SIZE       64    // maximum packet size
 #endif
 #ifndef USB_BO_CBW_SIZE
-  #define USB_BO_CBW_SIZE			  0x1F  // total length of command block CBW
-  #define USB_BO_CSW_SIZE			  0x0D  // total length of command status block CSW
+  #define USB_BO_CBW_SIZE       0x1F  // total length of command block CBW
+  #define USB_BO_CSW_SIZE       0x0D  // total length of command status block CSW
 #endif
 #ifndef USB_BO_CBW_SIG0
   #define USB_BO_CBW_SIG0       0x55  // command block CBW identification flag 'USBC'
