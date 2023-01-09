@@ -82,7 +82,7 @@ void main(void) {
       I2C_start();                            // start I2C transmission
       while(CDC_getRTS()) {                   // repeat for all incoming bytes
         while(CDC_available())                // incoming CDC data byte?
-          I2C_write((uint8_t)CDC_read());     // write received data byte via I2C
+          I2C_write(CDC_read());              // write received data byte via I2C
       }
       I2C_stop();                             // stop I2C transmission
     }

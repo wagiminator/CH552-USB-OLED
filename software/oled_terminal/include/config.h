@@ -19,7 +19,7 @@
 
 // USB descriptor strings
 #define MANUFACTURER_STR    'w','a','g','i','m','i','n','a','t','o','r'
-#define PRODUCT_STR         'I','2','C','-','B','r','i','d','g','e'
+#define PRODUCT_STR         'O','L','E','D','-','T','e','r','m','i','n','a','l'
 #define SERIAL_STR          'g','i','t','h','u','b','.','c','o','m','/', \
                             'w','a','g','i','m','i','n','a','t','o','r'
 #define INTERFACE_STR       'C','D','C',' ','S','e','r','i','a','l'

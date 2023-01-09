@@ -62,6 +62,14 @@ void I2C_start(uint8_t addr) {
   I2C_write(addr);                          // send slave address
 }
 
+// I2C restart transmission
+void I2C_restart(uint8_t addr) {
+  I2C_SDA_HIGH();                           // prepare SDA for HIGH to LOW transition
+  I2C_DELAY_H();                            // delay
+  I2C_SCL_HIGH();                           // restart condition: clock HIGH
+  I2C_start(addr);                          // start again
+}
+
 // I2C stop transmission
 void I2C_stop(void) {
   I2C_SDA_LOW();                            // prepare SDA for LOW to HIGH transition

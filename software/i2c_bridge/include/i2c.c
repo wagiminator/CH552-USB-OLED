@@ -61,6 +61,13 @@ void I2C_start(void) {
   I2C_SCL_LOW();                            // start condition: SCL goes LOW second
 }
 
+// I2C restart transmission
+void I2C_restart(void) {
+  I2C_SDA_HIGH();                           // prepare SDA for HIGH to LOW transition
+  I2C_DELAY_H();                            // delay
+  I2C_SCL_HIGH();                           // restart condition: clock HIGH
+}
+
 // I2C stop transmission
 void I2C_stop(void) {
   I2C_SDA_LOW();                            // prepare SDA for LOW to HIGH transition

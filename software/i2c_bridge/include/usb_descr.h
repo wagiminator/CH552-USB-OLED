@@ -8,13 +8,15 @@
 // ===================================================================================
 // USB Endpoint Addresses and Sizes
 // ===================================================================================
-#define EP0_SIZE    DEFAULT_ENDP0_SIZE
-#define EP1_SIZE    DEFAULT_ENDP1_SIZE
-#define EP2_SIZE    MAX_PACKET_SIZE
+#define EP0_SIZE        64
+#define EP1_SIZE        16
+#define EP2_SIZE        64
 
-#define EP0_ADDR    0
-#define EP1_ADDR    (EP0_ADDR + EP0_SIZE + 2)
-#define EP2_ADDR    (EP1_ADDR + EP1_SIZE + 2)
+#define EP0_ADDR        0
+#define EP1_ADDR        (EP0_ADDR + EP_ADDR_SIZE(EP0_SIZE))
+#define EP2_ADDR        (EP1_ADDR + EP_ADDR_SIZE(EP1_SIZE))
+
+#define EP_ADDR_SIZE(x) (x+2<64 ? x+2 : 64)
 
 // ===================================================================================
 // Device and Configuration Descriptors

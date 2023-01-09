@@ -8,7 +8,7 @@ USB-OLED is a simple USB-controlled 128x64 pixels I2C OLED display. The CH552E (
 ![USB_OLED_wiring.png](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_wiring.png)
 
 ## CH552E 8-bit USB Device Microcontroller
-The CH552E is a low-cost, enhanced E8051 core MCU compatible with the MCS51 instruction set. It has an integrated USB controller with USB2.0 data transfer at full speed (12 Mbit/s) and supports up to 64 byte data packets with integrated FIFO and direct memory access (DMA). The CH552E has a factory built-in bootloader so firmware can be uploaded directly via USB without the need for an additional programming device.
+The CH552E is a low-cost, enhanced E8051 core microcontroller compatible with the MCS51 instruction set. It has an integrated USB 2.0 controller with full-speed data transfer (12 Mbit/s) and supports up to 64 byte data packets with integrated FIFO and direct memory access (DMA). The CH552E has a factory built-in bootloader so firmware can be uploaded directly via USB without the need for an additional programming device.
 
 ![USB_OLED_pic2.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic2.jpg)
 

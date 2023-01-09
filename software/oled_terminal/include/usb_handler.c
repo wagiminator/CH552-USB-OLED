@@ -8,7 +8,7 @@
 //CDC functions:
 void CDC_reset(void);
 void CDC_setLineCoding(void);
-uint16_t CDC_getLineCoding(void);
+uint8_t CDC_getLineCoding(void);
 void CDC_setControlLineState(void);
 void USB_EP2_IN(void);
 void USB_EP2_OUT(void);
@@ -26,8 +26,8 @@ inline void NOP_Process(void) {}
 
 // Copy descriptor *pDescr to Ep0
 // (Thanks to Ralph Doncaster)
-#pragma callee_saves cpy_desc_Ep0
-void cpy_desc_Ep0(uint8_t len) __naked {
+#pragma callee_saves USB_EP0_copyDescr
+void USB_EP0_copyDescr(uint8_t len) {
   len;                          // stop unreferenced argument warning
   __asm
     push ar7                    ; r7 -> stack
@@ -44,7 +44,6 @@ void cpy_desc_Ep0(uint8_t len) __naked {
     .DB  0xA5                   ; acc -> Ep0Buffer[dptr1] & inc dptr1
     djnz r7, 01$                ; dec r7 & if r7 not zero jump to 01$
     pop  ar7                    ; r7 <- stack
-    ret                         ; return
   __endasm;
 }
 
@@ -113,7 +112,7 @@ void USB_EP0_SETUP(void) {
           if(len != 0xff) {
             if(SetupLen > len) SetupLen = len;  // limit length
             len = SetupLen >= EP0_SIZE ? EP0_SIZE : SetupLen;
-            cpy_desc_Ep0(len);              // copy descriptor to Ep0
+            USB_EP0_copyDescr(len);              // copy descriptor to Ep0
             SetupLen -= len;
             pDescr += len;
           }
@@ -250,7 +249,7 @@ void USB_EP0_IN(void) {
   switch(SetupReq) {
     case USB_GET_DESCRIPTOR:
       len = SetupLen >= EP0_SIZE ? EP0_SIZE : SetupLen;
-      cpy_desc_Ep0(len);                    // copy descriptor to Ep0                                
+      USB_EP0_copyDescr(len);                    // copy descriptor to Ep0                                
       SetupLen -= len;
       pDescr += len;
       UEP0_T_LEN = len;

@@ -10,7 +10,7 @@
 // ===================================================================================
 inline void CLK_config(void) {
   SAFE_MOD = 0x55;
-  SAFE_MOD = 0xAA;              // enter safe mode
+  SAFE_MOD = 0xAA;                              // enter safe mode
   
   #if FREQ_SYS == 32000000
     __asm__("orl _CLOCK_CFG, #0b00000111");     // 32MHz
@@ -38,7 +38,7 @@ inline void CLK_config(void) {
     #warning FREQ_SYS invalid or not set
   #endif
 
-  SAFE_MOD = 0x00;              // terminate safe mode
+  SAFE_MOD = 0x00;                              // terminate safe mode
 }
 
 // ===================================================================================
@@ -46,8 +46,8 @@ inline void CLK_config(void) {
 // ===================================================================================
 inline void CLK_external(void) {
   SAFE_MOD = 0x55;
-  SAFE_MOD = 0xAA;              // enter safe mode
-  CLOCK_CFG |=  bOSC_EN_XT;     // enable external crystal
-  CLOCK_CFG &= ~bOSC_EN_INT;    // turn off the internal crystal
-  SAFE_MOD = 0x00;              // terminate safe mode
+  SAFE_MOD = 0xAA;                              // enter safe mode
+  CLOCK_CFG |=  bOSC_EN_XT;                     // enable external crystal
+  CLOCK_CFG &= ~bOSC_EN_INT;                    // turn off the internal crystal
+  SAFE_MOD = 0x00;                              // terminate safe mode
 }
