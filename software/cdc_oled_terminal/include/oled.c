@@ -1,6 +1,18 @@
 // ===================================================================================
 // SSD1306 128x64 Pixels OLED Terminal Functions
 // ===================================================================================
+//
+// Collection of the most necessary functions for controlling an SSD1306 128x64 pixels
+// I2C OLED for the display of text in the context of emulating a terminal output.
+//
+// References:
+// -----------
+// - Stephen Denne: https://github.com/datacute/Tiny4kOLED
+// - David Johnson-Davies: http://www.technoblogy.com/show?TV4
+// - TinyOLEDdemo: https://github.com/wagiminator/attiny13-tinyoleddemo
+// - TinyTerminal: https://github.com/wagiminator/ATtiny85-TinyTerminal
+//
+// 2022 by Stefan Wagner: https://github.com/wagiminator
 
 #include "i2c.h"
 
@@ -78,10 +90,10 @@ __code uint8_t OLED_INIT_CMD[] = {
 };
 
 // OLED global variables
-__xdata uint8_t Line, Column, Scroll;
+__xdata uint8_t line, column, scroll;
 
 // OLED set cursor to line start
-void OLED_setLine(uint8_t line) {
+void OLED_setline(uint8_t line) {
   I2C_start(OLED_ADDR);                   // start transmission to OLED
   I2C_write(OLED_CMD_MODE);               // set command mode
   I2C_write(OLED_PAGE + line);            // set line
@@ -90,9 +102,9 @@ void OLED_setLine(uint8_t line) {
 }
 
 // OLED clear line
-void OLED_clearLine(uint8_t line) {
+void OLED_clearline(uint8_t line) {
   uint8_t i;
-  OLED_setLine(line);                     // set cursor to line start
+  OLED_setline(line);                     // set cursor to line start
   I2C_start(OLED_ADDR);                   // start transmission to OLED
   I2C_write(OLED_DAT_MODE);               // set data mode
   for(i=128; i; i--) I2C_write(0x00);     // clear the line
@@ -102,20 +114,20 @@ void OLED_clearLine(uint8_t line) {
 // OLED clear screen
 void OLED_clear(void) {
   uint8_t i;
-  for(i=0; i<8; i++) OLED_clearLine(i);
-  Line = Scroll;
-  Column = 0;
-  OLED_setLine((Line + Scroll) & 0x07);
+  for(i=0; i<8; i++) OLED_clearline(i);
+  line = scroll;
+  column = 0;
+  OLED_setline((line + scroll) & 0x07);
 }
 
 // OLED clear the top line, then scroll the display up by one line
 void OLED_scrollDisplay(void) {
-  OLED_clearLine(Scroll);                 // clear line
-  Scroll = (Scroll + 1) & 0x07;           // set next line
+  OLED_clearline(scroll);                 // clear line
+  scroll = (scroll + 1) & 0x07;           // set next line
   I2C_start(OLED_ADDR);                   // start transmission to OLED
   I2C_write(OLED_CMD_MODE);               // set command mode
   I2C_write(OLED_OFFSET);                 // set display offset:
-  I2C_write(Scroll << 3);                 // scroll up
+  I2C_write(scroll << 3);                 // scroll up
   I2C_stop();                             // stop transmission
 }
 
@@ -128,7 +140,7 @@ void OLED_init(void) {
   for(i = 0; i < sizeof(OLED_INIT_CMD); i++)
     I2C_write(OLED_INIT_CMD[i]);          // send the command bytes
   I2C_stop();                             // stop transmission
-  Scroll = 0;                             // start with zero scroll
+  scroll = 0;                             // start with zero scroll
   OLED_clear();                           // clear screen
 }
 
@@ -146,28 +158,28 @@ void OLED_plotChar(char c) {
 
 // OLED write a character or handle control characters
 void OLED_write(char c) {
-  c = c & 0x7F;                           // Ignore top bit
+  c = c & 0x7F;                           // ignore top bit
   // normal character
   if(c >= 32) {
     OLED_plotChar(c);
-    if(++Column > 20) {
-      Column = 0;
-      if(Line == 7) OLED_scrollDisplay();
-      else Line++;
-      OLED_setLine((Line + Scroll) & 0x07);
+    if(++column > 20) {
+      column = 0;
+      if(line == 7) OLED_scrollDisplay();
+      else line++;
+      OLED_setline((line + scroll) & 0x07);
     }
   }
   // new line
   else if(c == '\n') {
-    Column = 0;
-    if(Line == 7) OLED_scrollDisplay();
-    else Line++;
-    OLED_setLine((Line + Scroll) & 0x07);
+    column = 0;
+    if(line == 7) OLED_scrollDisplay();
+    else line++;
+    OLED_setline((line + scroll) & 0x07);
   }
   // carriage return
   else if(c == '\r') {
-    Column = 0;
-    OLED_setLine((Line + Scroll) & 0x07);
+    column = 0;
+    OLED_setline((line + scroll) & 0x07);
   }
 }
 

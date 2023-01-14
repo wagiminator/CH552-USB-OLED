@@ -1,6 +1,18 @@
 // ===================================================================================
 // SSD1306 128x64 Pixels OLED Terminal Functions
 // ===================================================================================
+//
+// Collection of the most necessary functions for controlling an SSD1306 128x64 pixels
+// I2C OLED for the display of text in the context of emulating a terminal output.
+//
+// References:
+// -----------
+// - Stephen Denne: https://github.com/datacute/Tiny4kOLED
+// - David Johnson-Davies: http://www.technoblogy.com/show?TV4
+// - TinyOLEDdemo: https://github.com/wagiminator/attiny13-tinyoleddemo
+// - TinyTerminal: https://github.com/wagiminator/ATtiny85-TinyTerminal
+//
+// 2022 by Stefan Wagner: https://github.com/wagiminator
 
 #pragma once
 #include <stdint.h>

@@ -1,6 +1,18 @@
 // ===================================================================================
 // I2C Functions for CH551, CH552 and CH554
 // ===================================================================================
+//
+// Simple I2C bitbanging for 400kHz slave devices. For system clock < 12MHz the 
+// I2C clock frequency is slower. ACK bit of the slave is ignored. Clock stretching 
+// by the slave is not allowed.
+//
+// PIN_SDA and PIN_SCL must be defined in config.h:
+// PIN_SDA - pin connected to serial data of the I2C bus
+// PIN_SCL - pin connected to serial clock of the I2C bus
+// External pull-up resistors (4k7 - 10k) are mandatory!
+//
+// Further information:     https://github.com/wagiminator/ATtiny13-TinyOLEDdemo
+// 2022 by Stefan Wagner:   https://github.com/wagiminator
 
 #include "i2c.h"
 #include "gpio.h"
@@ -25,6 +37,14 @@
 #else                                                       // ~100kHz I2C clock
   #define I2C_DELAY_H()                                     // no delay
   #define I2C_DELAY_L()                                     // no delay
+#endif
+
+// Check pin defines
+#ifndef PIN_SDA
+  #error PIN_SDA is undefinded
+#endif
+#ifndef PIN_SCL
+  #error PIN_SCL is undefined
 #endif
 
 // I2C macros

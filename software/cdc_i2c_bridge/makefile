@@ -1,5 +1,5 @@
 # ===================================================================================
-# Project:  USB to I2C Bridge for CH55x
+# Project:  USB-CDC to I2C Bridge for CH55x
 # Author:   Stefan Wagner
 # Year:     2022
 # URL:      https://github.com/wagiminator
