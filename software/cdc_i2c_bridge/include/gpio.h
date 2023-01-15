@@ -217,10 +217,10 @@ SBIT(P3_7, 0xB0, 7);
 // Start PWM on pin (must be a PWM-capable pin!!!)
 // ===================================================================================
 #define PWM_start(PIN) \
-  ((PIN == P15) ? (PIN_FUNC &= ~bPWM1_PIN_X, PWM_CTRL |= bPWM1_OUT_EN) : \
-  ((PIN == P34) ? (PIN_FUNC &= ~bPWM2_PIN_X, PWM_CTRL |= bPWM2_OUT_EN) : \
-  ((PIN == P30) ? (PIN_FUNC |=  bPWM1_PIN_X, PWM_CTRL |= bPWM1_OUT_EN) : \
-  ((PIN == P31) ? (PIN_FUNC |=  bPWM2_PIN_X, PWM_CTRL |= bPWM2_OUT_EN) : \
+  ((PIN == P15) ? (PWM_CTRL &= ~bPWM_CLR_ALL, PIN_FUNC &= ~bPWM1_PIN_X, PWM_CTRL |= bPWM1_OUT_EN) : \
+  ((PIN == P34) ? (PWM_CTRL &= ~bPWM_CLR_ALL, PIN_FUNC &= ~bPWM2_PIN_X, PWM_CTRL |= bPWM2_OUT_EN) : \
+  ((PIN == P30) ? (PWM_CTRL &= ~bPWM_CLR_ALL, PIN_FUNC |=  bPWM1_PIN_X, PWM_CTRL |= bPWM1_OUT_EN) : \
+  ((PIN == P31) ? (PWM_CTRL &= ~bPWM_CLR_ALL, PIN_FUNC |=  bPWM2_PIN_X, PWM_CTRL |= bPWM2_OUT_EN) : \
 (0)))))
 
 // ===================================================================================
