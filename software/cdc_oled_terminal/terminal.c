@@ -58,15 +58,15 @@
 
 // Libraries
 #include <config.h>                       // user configurations
+#include <system.h>                       // system functions
 #include <gpio.h>                         // for GPIO
-#include <clock.h>                        // system clock functions
 #include <delay.h>                        // for delays
-#include <usb_cdc.h>                      // for USB-CDC serial
 #include <oled.h>                         // for OLED
+#include <usb_cdc.h>                      // for USB-CDC serial
 
 // Prototypes for used interrupts
 void USB_interrupt(void);
-void DeviceUSBInterrupt(void) __interrupt (INT_NO_USB) {
+void USB_ISR(void) __interrupt(INT_NO_USB) {
   USB_interrupt();
 }
 

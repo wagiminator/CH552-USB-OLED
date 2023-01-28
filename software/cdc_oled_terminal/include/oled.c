@@ -1,5 +1,5 @@
 // ===================================================================================
-// SSD1306 128x64 Pixels OLED Terminal Functions
+// SSD1306 128x64 Pixels OLED Terminal Functions                              * v1.0 *
 // ===================================================================================
 //
 // Collection of the most necessary functions for controlling an SSD1306 128x64 pixels

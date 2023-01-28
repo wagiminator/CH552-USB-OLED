@@ -1,5 +1,5 @@
 // ===================================================================================
-// I2C Functions for CH551, CH552 and CH554
+// I2C Functions for CH551, CH552 and CH554                                   * v1.0 *
 // ===================================================================================
 //
 // Simple I2C bitbanging for 400kHz slave devices. For system clock < 12MHz the 
