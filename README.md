@@ -30,7 +30,11 @@ echo "Hello World!\n" > /dev/ttyACM0
 ```
 
 ## USB to I²C Bridge
-This firmware implements a simple USB to I2C bridge. Any data transmission must begin with the PC software setting the RTS flag. This causes the firmware on the microcontroller to set the start condition on the I2C bus. Then all data bytes sent via USB CDC are passed directly to the I2C bus. This also means that each data stream must start with the I2C write address of the I2C slave device (in this case the OLED). When all data bytes have been transferred, the PC software must clear the RTS flag again, which causes the microcontroller to set the stop condition on the I2C bus. This mode of operation enables full control of the OLED via the PC. In principle, the firmware also allows the control of other I2C devices.
+This firmware is designed to function as a simple USB to I2C bridge, which enables communication between a PC and an I2C-enabled device, such as an OLED screen. In order for data transmission to begin, the PC software must first set the RTS (Ready To Send) flag. This action triggers the firmware on the microcontroller to initiate the start condition on the I2C bus, signaling that data will be transferred.
+
+Once the start condition has been set, all data bytes that are sent via USB CDC are passed directly to the I2C bus. It is important to note that each data stream must begin with the I2C write address of the I2C slave device, in this case, the OLED screen.
+
+When all data bytes have been transferred, the PC software must clear the RTS flag again, signaling the end of the data transmission. This causes the microcontroller to set the stop condition on the I2C bus, effectively ending the communication. This mode of operation allows for full control of the OLED via the PC, and in principle, the firmware could also be used to control other I2C devices.
 
 Two attached Python scripts show the PC-side implementation of the I2C bridge as an example. "bridge-demo.py" shows and scrolls an image, "bridge-conway.py" plays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) on the OLED.
 
