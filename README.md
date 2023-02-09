@@ -13,7 +13,7 @@ The CH552E is a low-cost, enhanced E8051 core microcontroller compatible with th
 ![USB_OLED_pic2.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic2.jpg)
 
 # Software
-## CDC OLED Terminal
+## USB CDC OLED Terminal
 This firmware implements a simple terminal for displaying text messages on the OLED. It can be use with any serial monitor on your PC. The integrated buzzer gives an acoustic signal for every message received.
 
 ![USB_OLED_pic3.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic3.jpg)
@@ -29,7 +29,7 @@ On Linux you can also send text messages via a terminal:
 echo "Hello World!\n" > /dev/ttyACM0
 ```
 
-## USB to I²C Bridge
+## USB CDC to I²C Bridge
 This firmware is designed to function as a simple USB to I2C bridge, which enables communication between a PC and an I2C-enabled device, such as an OLED screen. In order for data transmission to begin, the PC software must first set the RTS (Ready To Send) flag. This action triggers the firmware on the microcontroller to initiate the start condition on the I2C bus, signaling that data will be transferred.
 
 Once the start condition has been set, all data bytes that are sent via USB CDC are passed directly to the I2C bus. It is important to note that each data stream must begin with the I2C write address of the I2C slave device, in this case, the OLED screen.
@@ -43,6 +43,26 @@ Two attached Python scripts show the PC-side implementation of the I2C bridge as
 Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a CDC device.
 - Run ```python3 bridge-demo.py``` or ```python3 bridge-conway.py```.
+
+## USB HID to I²C Bridge
+This firmware does the same as the CDC bridge, but here the device is identified as a USB Human Interface Device (HID). The advantage is that no driver installation is necessary under Windows either. However, the device can then only be controlled via the appropriate software on the PC side (in this case the attached Python scripts). In addition, administrator rights may be required for the software to detach the device interface from the kernel. The data rate is significantly slower with HID (interrupt transfer) than with CDC (bulk transfer), which is negligible in this application, since the bottleneck is the I²C bus.
+
+Data is sent to the device via HID reports with a maximum packet size of 64 bytes. For each packet received, the device first sets the start condition on the I²C bus, then transfers the data over the I²C bus and then sets the stop condition. Each packet must therefore start with the I²C address of the slave device.
+
+Operating Instructions:
+- Connect the board via USB to your PC. It should be detected as a HID device.
+- Run 'python3 hid-bridge-demo.py' or 'python3 hid-bridge-conway.py'.
+
+## USB Vendor Class to I²C Bridge
+This firmware implements a simple USB vendor class to I2C bridge. The start and stop condition on the I2C bus is set according to an appropriate vendor class control request. Data of any length is sent to the device at high speed via bulk transfer, which is passed directly to the slave device via I²C.
+
+Vendor control requests can also be used to control the buzzer or put the microcontroller into boot mode.
+
+This firmware also includes an experimental implementation of a Windows Compatible ID (WCID). This allows to use the device without manual driver installation on Windows systems. However, since I (un)fortunately do not have a Windows system, this function is untested. More information about WCID can be found [here](https://github.com/pbatard/libwdi/wiki/WCID-Devices). The WCID feature can be switched on or off in the configuration file (config.h). If not used, a manual installation of the libusb-win32 driver via the [Zadig tool](https://zadig.akeo.ie/) is required on Windows systems.
+
+Operating Instructions:
+- Connect the board via USB to your PC. It should be detected as a vendor class device.
+- Run 'python3 vendor-bridge-demo.py' or 'python3 vendor-bridge-conway.py'.
 
 ## Compiling and Installing Firmware
 ### Installing Toolchain for CH55x
