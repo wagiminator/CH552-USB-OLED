@@ -51,7 +51,7 @@ Data is sent to the device via HID reports with a maximum packet size of 64 byte
 
 Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a HID device.
-- Run 'python3 hid-bridge-demo.py' or 'python3 hid-bridge-conway.py'.
+- Run 'sudo python3 hid-bridge-demo.py' or 'sudo python3 hid-bridge-conway.py'.
 
 ## USB Vendor Class to I²C Bridge
 This firmware implements a simple USB vendor class to I²C bridge. The start and stop condition on the I²C bus is set according to an appropriate vendor class control request. Data of any length is sent to the device at high speed via bulk transfer, which is passed directly to the slave device via I²C. Each data stream must start with the I²C write address of the slave device.
