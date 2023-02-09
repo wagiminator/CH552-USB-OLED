@@ -1,5 +1,5 @@
 # USB-controlled I²C OLED based on CH552E
-USB-OLED is a simple USB-controlled 128x64 pixels I2C OLED display. The CH552E (or CH554E) microcontroller builds a [USB Communication Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) for serial communication over USB, which can be used to transfer data from the PC to the OLED. An integrated buzzer offers the possibility of outputting acoustic signals.
+USB-OLED is a simple USB-controlled 128x64 pixels I²C OLED display. The CH552E (or CH554E) microcontroller builds a [USB Communication Device Class (CDC)](https://en.wikipedia.org/wiki/USB_communications_device_class) for serial communication over USB, which can be used to transfer data from the PC to the OLED. An integrated buzzer offers the possibility of outputting acoustic signals.
 
 ![USB_OLED_pic4.jpg](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_pic4.jpg)
 
@@ -30,13 +30,13 @@ echo "Hello World!\n" > /dev/ttyACM0
 ```
 
 ## USB CDC to I²C Bridge
-This firmware is designed to function as a simple USB to I2C bridge, which enables communication between a PC and an I2C-enabled device, such as an OLED screen. In order for data transmission to begin, the PC software must first set the RTS (Ready To Send) flag. This action triggers the firmware on the microcontroller to initiate the start condition on the I2C bus, signaling that data will be transferred.
+This firmware is designed to function as a simple USB to I²C bridge, which enables communication between a PC and an I²C-enabled device, such as an OLED screen. In order for data transmission to begin, the PC software must first set the RTS (Ready To Send) flag. This action triggers the firmware on the microcontroller to initiate the start condition on the I²C bus, signaling that data will be transferred.
 
-Once the start condition has been set, all data bytes that are sent via USB CDC are passed directly to the I2C bus. It is important to note that each data stream must begin with the I2C write address of the I2C slave device, in this case, the OLED screen.
+Once the start condition has been set, all data bytes that are sent via USB CDC are passed directly to the I²C bus. It is important to note that each data stream must begin with the I²C write address of the I²C slave device, in this case, the OLED screen.
 
-When all data bytes have been transferred, the PC software must clear the RTS flag again, signaling the end of the data transmission. This causes the microcontroller to set the stop condition on the I2C bus, effectively ending the communication. This mode of operation allows for full control of the OLED via the PC, and in principle, the firmware could also be used to control other I2C devices.
+When all data bytes have been transferred, the PC software must clear the RTS flag again, signaling the end of the data transmission. This causes the microcontroller to set the stop condition on the I²C bus, effectively ending the communication. This mode of operation allows for full control of the OLED via the PC, and in principle, the firmware could also be used to control other I²C devices.
 
-Two attached Python scripts show the PC-side implementation of the I2C bridge as an example. "bridge-demo.py" shows and scrolls an image, "bridge-conway.py" plays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) on the OLED.
+Two attached Python scripts show the PC-side implementation of the I²C bridge as an example. "bridge-demo.py" shows and scrolls an image, "bridge-conway.py" plays [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) on the OLED.
 
 ![USB_OLED_anim.gif](https://raw.githubusercontent.com/wagiminator/CH552-USB-OLED/main/documentation/USB_OLED_anim.gif)
 
@@ -47,14 +47,14 @@ Operating Instructions:
 ## USB HID to I²C Bridge
 This firmware does the same as the CDC bridge, but here the device is identified as a USB Human Interface Device (HID). The advantage is that no driver installation is necessary under Windows either. However, the device can then only be controlled via the appropriate software on the PC side (in this case the attached Python scripts). In addition, administrator rights may be required for the software to detach the device interface from the kernel. The data rate is significantly slower with HID (interrupt transfer) than with CDC (bulk transfer), which is negligible in this application, since the bottleneck is the I²C bus.
 
-Data is sent to the device via HID reports with a maximum packet size of 64 bytes. For each packet received, the device first sets the start condition on the I²C bus, then transfers the data over the I²C bus and then sets the stop condition. Each packet must therefore start with the I²C address of the slave device.
+Data is sent to the device via HID reports with a maximum packet size of 64 bytes. For each packet received, the device first sets the start condition on the I²C bus, then transfers the data over the I²C bus and then sets the stop condition. Each packet must therefore start with the I²C write address of the slave device.
 
 Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a HID device.
 - Run 'python3 hid-bridge-demo.py' or 'python3 hid-bridge-conway.py'.
 
 ## USB Vendor Class to I²C Bridge
-This firmware implements a simple USB vendor class to I2C bridge. The start and stop condition on the I2C bus is set according to an appropriate vendor class control request. Data of any length is sent to the device at high speed via bulk transfer, which is passed directly to the slave device via I²C.
+This firmware implements a simple USB vendor class to I²C bridge. The start and stop condition on the I²C bus is set according to an appropriate vendor class control request. Data of any length is sent to the device at high speed via bulk transfer, which is passed directly to the slave device via I²C. Each data stream must start with the I²C write address of the slave device.
 
 Vendor control requests can also be used to control the buzzer or put the microcontroller into boot mode.
 
