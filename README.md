@@ -64,15 +64,8 @@ Operating Instructions:
 - Connect the board via USB to your PC. It should be detected as a vendor class device.
 - Run ```python3 vendor-bridge-demo.py``` or ```python3 vendor-bridge-conway.py```.
 
-## Compiling and Installing Firmware
-### Installing Toolchain for CH55x
-Install the [CH55x Software Development Kit for the SDCC compiler](https://github.com/Blinkinlabs/ch554_sdcc). Follow the instructions on the website. In order for the programming tool and the I²C-Bridge software to work, Python3 must be installed on your system. To do this, follow these [instructions](https://www.pythontutorial.net/getting-started/install-python/). In addition [PyUSB](https://github.com/pyusb/pyusb) and [PySerial](https://github.com/pyserial/pyserial/) must be installed. On Linux (Debian-based), all of this can be done with the following commands:
-
-```
-sudo apt install build-essential sdcc python3 python3-pip
-sudo pip install pyusb pyserial
-```
-
+# Compiling and Installing Firmware
+## Preparing the CH55x Bootloader
 ### Installing Drivers for the CH55x Bootloader
 On Linux you do not need to install a driver. However, by default Linux will not expose enough permission to upload your code with the USB bootloader. In order to fix this, open a terminal and run the following commands:
 
@@ -81,13 +74,50 @@ echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="4348", ATTR{idProduct}=="55e0", MODE="6
 sudo service udev restart
 ```
 
-On Windows you will need the [Zadig tool](https://zadig.akeo.ie/) to install the correct driver for both, the CH55x bootloader and the CDC device. Click "Options" and "List All Devices" to select the USB module, then install the libusb-win32 driver.
+On Windows you will need the [Zadig tool](https://zadig.akeo.ie/) to install the correct driver. Click "Options" and "List All Devices" to select the USB module, then install the libusb-win32 driver. To do this, the board must be connected and the CH55x must be in bootloader mode.
 
 ### Entering CH55x Bootloader Mode
 A brand new chip starts automatically in bootloader mode as soon as it is connected to the PC via USB. Once firmware has been uploaded, the bootloader must be started manually for new uploads. To do this, the board must first be disconnected from the USB port and all voltage sources. Now press the BOOT button and keep it pressed while reconnecting the board to the USB port of your PC. The chip now starts again in bootloader mode, the BOOT button can be released and new firmware can be uploaded within the next couple of seconds.
 
+## Compiling and Uploading using the makefile
+### Installing SDCC Toolchain for CH55x
+Install the [SDCC Compiler](https://sdcc.sourceforge.net/). In order for the programming tool to work, Python3 must be installed on your system. To do this, follow these [instructions](https://www.pythontutorial.net/getting-started/install-python/). In addition [pyusb](https://github.com/pyusb/pyusb) must be installed. On Linux (Debian-based), all of this can be done with the following commands:
+
+```
+sudo apt install build-essential sdcc python3 python3-pip
+sudo pip install pyusb
+```
+
 ### Compiling and Uploading Firmware
-Open a terminal and navigate to the folder with the makefile. Run ```make flash``` to compile and upload the firmware. If you don't want to compile the firmware yourself, you can also upload the precompiled binary. To do this, just run ```python3 ./tools/chprog.py firmware.bin```.
+- Open a terminal.
+- Navigate to the folder with the makefile. 
+- Connect the board and make sure the CH55x ist in bootloader mode. 
+- Run ```make flash``` to compile and upload the firmware. 
+- If you don't want to compile the firmware yourself, you can also upload the precompiled binary. To do this, just run ```python3 ./tools/chprog.py firmware.bin```.
+
+## Compiling and Uploading using the Arduino IDE
+### Installing the Arduino IDE and CH55xduino
+Install the [Arduino IDE](https://www.arduino.cc/en/software) if you haven't already. Install the [CH55xduino](https://github.com/DeqingSun/ch55xduino) package by following the instructions on the website.
+
+### Compiling and Uploading Firmware
+- Copy the .ino and .c files as well as the /src folder together into one folder and name it like the .ino file. 
+- Open the .ino file in the Arduino IDE.
+- Go to **Tools -> Board -> CH55x Boards** and select **CH552 Board**.
+- Go to **Tools** and choose the following board options:
+  - **Clock Source:**   16 MHz (internal)
+  - **Upload Method:**  USB
+  - **USB Settings:**   USER CODE /w 266B USB RAM
+- Connect the board and make sure the CH55x ist in bootloader mode. 
+- Click **Upload**.
+
+## Installing CDC driver and PySerial
+On Linux you do not need to install a CDC driver. On Windows you will need the [Zadig tool](https://zadig.akeo.ie/) to install the correct driver for the CDC device. Click "Options" and "List All Devices" to select the CDC device, then install the CDC driver.
+
+For some Python scripts to work, [PySerial](https://github.com/pyserial/pyserial/) must be installed. This can be done with the following command:
+
+```
+pip install pyserial
+```
 
 # References, Links and Notes
 1. [EasyEDA Design Files](https://oshwlab.com/wagiminator/ch552-usb2oled)
