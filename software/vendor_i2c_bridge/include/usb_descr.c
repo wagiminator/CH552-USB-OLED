@@ -113,8 +113,8 @@ __code uint8_t WCID_FEATURE_DESCR[] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,       // reserved (7 bytes)
     0x00,                                           // interface number 0
     0x01,                                           // reserved
-    'W', 'I', 'N', 'U', 'S', 'B', 0x00, 0x00,       // Compatible ID "WINUSB\0\0"
-    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // Subcompatible ID (unused)
+    'L', 'I', 'B', 'U', 'S', 'B', '0', 0x00,        // compatibility ID: libusb-win32
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // subcompatibility ID (unused)
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00              // reserved 6 bytes
 };
 
