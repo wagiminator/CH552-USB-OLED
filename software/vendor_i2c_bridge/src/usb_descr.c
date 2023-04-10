@@ -121,5 +121,5 @@ __code uint8_t WCID_FEATURE_DESCR[] = {
 // Microsoft OS string descriptor for WCID driver (index 0xEE)
 __code uint16_t MicrosoftDescr[] = {
   ((uint16_t)USB_DESCR_TYP_STRING << 8) | sizeof(MicrosoftDescr),
-  'M','S','F','T','1','0','0', WCID_VENDOR_CODE, 0x00};
+  'M','S','F','T','1','0','0', WCID_VENDOR_CODE};
 #endif
