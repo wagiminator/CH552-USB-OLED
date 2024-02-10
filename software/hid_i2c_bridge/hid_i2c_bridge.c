@@ -58,7 +58,7 @@
 #include "src/system.h"                   // system functions
 #include "src/delay.h"                    // for delays
 #include "src/i2c.h"                      // for I²C
-#include "src/usb_hid.h"                  // for USB HID data
+#include "src/usb_hid_data.h"             // for USB HID data
 
 // Prototypes for used interrupts
 void USB_interrupt(void);

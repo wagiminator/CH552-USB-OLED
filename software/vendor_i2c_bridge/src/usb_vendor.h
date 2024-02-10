@@ -4,16 +4,20 @@
 
 #pragma once
 #include <stdint.h>
+#include "ch554.h"
+#include "usb.h"
+#include "usb_descr.h"
+#include "usb_handler.h"
 
 // Setup function
-void VEN_init(void);                                // setup USB vendor-specific device
+#define VEN_init    USB_init                        // setup USB vendor-specific device
 
 // Vendor class control requests
 #define VEN_REQ_BOOTLOADER  1                       // enter bootloader
 #define VEN_REQ_BUZZER_ON   2                       // turn on buzzer
 #define VEN_REQ_BUZZER_OFF  3                       // turn off buzzer
 #define VEN_REQ_I2C_START   4                       // set start condition on I2C bus
-#define VEN_REQ_I2C_STOP    6                       // set stop condition on I2C bus
+#define VEN_REQ_I2C_STOP    5                       // set stop condition on I2C bus
 
 // Bulk data transfer functions
 #define VEN_available()   (VEN_EP1_readByteCount)   // number of received bytes

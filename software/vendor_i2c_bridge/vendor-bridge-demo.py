@@ -32,7 +32,7 @@ VEN_REQ_BOOTLOADER  = 1   # enter bootloader
 VEN_REQ_BUZZER_ON   = 2   # turn on buzzer
 VEN_REQ_BUZZER_OFF  = 3   # turn off buzzer
 VEN_REQ_I2C_START   = 4   # set start condition on I2C bus
-VEN_REQ_I2C_STOP    = 6   # set stop condition on I2C bus
+VEN_REQ_I2C_STOP    = 5   # set stop condition on I2C bus
 
 VEN_REQ_WRITE = 0x40      # (bRequestType): vendor host to device
 VEN_REQ_READ  = 0xC0      # (bRequestType): vendor device to host

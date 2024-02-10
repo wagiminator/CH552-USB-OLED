@@ -10,6 +10,10 @@
 // USB_DEVICE_VERSION       - Device version (16-bit BCD)
 // USB_MAX_POWER_mA         - Device max power in mA
 // All string descriptors.
+//
+// In the makefile the following microcontroller settings must be made:
+// XRAM_LOC   = 0x0100
+// XRAM_SIZE  = 0x0300
 
 #pragma once
 #include <stdint.h>
@@ -17,7 +21,7 @@
 #include "config.h"
 
 // ===================================================================================
-// USB Endpoint Addresses and Sizes
+// USB Endpoint Definitions
 // ===================================================================================
 #define EP0_SIZE        64
 #define EP1_SIZE        64
@@ -26,9 +30,12 @@
 #define EP1_ADDR        (EP0_ADDR + EP0_BUF_SIZE)
 
 #define EP0_BUF_SIZE    EP_BUF_SIZE(EP0_SIZE)
-#define EP1_BUF_SIZE    EP_BUF_SIZE(EP1_SIZE)
+#define EP1_BUF_SIZE    EP_BUF_SIZE(EP1_SIZE) + 64
 
 #define EP_BUF_SIZE(x)  (x+2<64 ? x+2 : 64)
+
+__xdata __at (EP0_ADDR) uint8_t EP0_buffer[EP0_BUF_SIZE];     
+__xdata __at (EP1_ADDR) uint8_t EP1_buffer[EP1_BUF_SIZE];
 
 // ===================================================================================
 // Device and Configuration Descriptors

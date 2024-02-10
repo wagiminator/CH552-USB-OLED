@@ -18,13 +18,16 @@
 #include "gpio.h"
 #include "config.h"
 
-// I2C delay (for 400kHz devices -> SCL low: min 1300us, SCL high: min 600us)
+// ===================================================================================
+// I2C Delay
+// ===================================================================================
+// (for 400kHz devices -> SCL low: min 1300us, SCL high: min 600us)
 // The exact number of clock cycles required for jumps and thus also loops cannot 
 // be precisely predicted. However, this can be accepted for this type of 
 // application (synchronous data transmission).
 #if F_CPU >= 24000000                                       // ~500kHz I2C clock
-  #define I2C_DELAY_H() __asm__("sjmp .+2");SAFE_MOD++      // delay 6-7 clock cycles
-  #define I2C_DELAY_L() __asm__("sjmp .+2");SAFE_MOD++      // delay 6-7 clock cycles
+  #define I2C_DELAY_H() __asm__("sjmp .+2");++SAFE_MOD      // delay 6-7 clock cycles
+  #define I2C_DELAY_L() __asm__("sjmp .+2");++SAFE_MOD      // delay 6-7 clock cycles
 #elif F_CPU >= 16000000                                     // ~500kHz I2C clock
   #define I2C_DELAY_H() __asm__("sjmp .+2")                 // delay 4-5 clock cycles
   #define I2C_DELAY_L()                                     // no delay
@@ -39,6 +42,10 @@
   #define I2C_DELAY_L()                                     // no delay
 #endif
 
+// ===================================================================================
+// I2C Pin Macros
+// ===================================================================================
+
 // Check pin defines
 #ifndef PIN_SDA
   #error PIN_SDA is undefinded
@@ -48,12 +55,16 @@
 #endif
 
 // I2C macros
-#define I2C_SDA_HIGH()  PIN_high(PIN_SDA) // release SDA -> pulled HIGH by resistor
-#define I2C_SDA_LOW()   PIN_low(PIN_SDA)  // SDA LOW     -> pulled LOW  by MCU
-#define I2C_SCL_HIGH()  PIN_high(PIN_SCL) // release SCL -> pulled HIGH by resistor
-#define I2C_SCL_LOW()   PIN_low(PIN_SCL)  // SCL LOW     -> pulled LOW  by MCU
-#define I2C_SDA_READ()  PIN_read(PIN_SDA) // read SDA pin
+#define I2C_SDA_HIGH()  PIN_high(PIN_SDA)   // release SDA -> pulled HIGH by resistor
+#define I2C_SDA_LOW()   PIN_low(PIN_SDA)    // SDA LOW     -> pulled LOW  by MCU
+#define I2C_SCL_HIGH()  PIN_high(PIN_SCL)   // release SCL -> pulled HIGH by resistor
+#define I2C_SCL_LOW()   PIN_low(PIN_SCL)    // SCL LOW     -> pulled LOW  by MCU
+#define I2C_SDA_READ()  PIN_read(PIN_SDA)   // read SDA pin
 #define I2C_CLOCKOUT()  I2C_DELAY_L();I2C_SCL_HIGH();I2C_DELAY_H();I2C_DELAY_H();I2C_SCL_LOW()
+
+// ===================================================================================
+// I2C Functions
+// ===================================================================================
 
 // I2C init function
 void I2C_init(void) {

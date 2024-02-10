@@ -63,7 +63,7 @@
 #include "src/system.h"                   // system functions
 #include "src/gpio.h"                     // for GPIO
 #include "src/delay.h"                    // for delays
-#include "src/oled.h"                     // for OLED
+#include "src/oled_term.h"                // for OLED
 #include "src/usb_cdc.h"                  // for USB-CDC serial
 
 // Prototypes for used interrupts

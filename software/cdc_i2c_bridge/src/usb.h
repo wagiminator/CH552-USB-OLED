@@ -1,5 +1,5 @@
 // ===================================================================================
-// USB constant and structure define
+// USB Constant and Structure Define
 // ===================================================================================
 
 #pragma once
@@ -136,7 +136,8 @@
 #define USB_DEV_CLASS_STORAGE   0x08
 #define USB_DEV_CLASS_HUB       0x09
 #define USB_DEV_CLASS_DATA      0x0A
-#define USB_DEV_CLASS_VEN_SPEC  0xFF
+#define USB_DEV_CLASS_MISC      0xEF
+#define USB_DEV_CLASS_VENDOR    0xFF
 #endif
 
 // USB endpoint type and attributes
@@ -285,8 +286,7 @@ typedef USB_HUB_DESCR __xdata *PXUSB_HUB_DESCR;
 typedef struct _USB_HID_DESCR {
     uint8_t  bLength;
     uint8_t  bDescriptorType;
-    uint8_t  bcdHIDL;
-    uint8_t  bcdHIDH;
+    uint16_t bcdHID;
     uint8_t  bCountryCode;
     uint8_t  bNumDescriptors;
     uint8_t  bDescriptorTypeX;

@@ -2,7 +2,6 @@
 // USB Descriptors
 // ===================================================================================
 
-#include "config.h"
 #include "usb_descr.h"
 
 // ===================================================================================
@@ -62,8 +61,18 @@ __code USB_CFG_DESCR_HID CfgDescr = {
     .bcdHID             = 0x0110,                 // HID class spec version (BCD: 1.1)
     .bCountryCode       = 0,                      // no country code
     .bNumDescriptors    = 1,                      // number of report descriptors: 1
-    .bDescriptorTypeX   = 34,                     // descriptor type: report
+    .bDescriptorTypeX   = USB_DESCR_TYP_REPORT,   // descriptor type: report
     .wDescriptorLength  = sizeof(ReportDescr)     // report descriptor length
+  },
+
+  // Endpoint Descriptor: Endpoint 1 (IN, Interrupt)
+  .ep1IN = {
+    .bLength            = sizeof(USB_ENDP_DESCR), // size of the descriptor in bytes: 7
+    .bDescriptorType    = USB_DESCR_TYP_ENDP,     // endpoint descriptor: 0x05
+    .bEndpointAddress   = USB_ENDP_ADDR_EP1_IN,   // endpoint: 1, direction: IN (0x81)
+    .bmAttributes       = USB_ENDP_TYPE_INTER,    // transfer type: interrupt (0x03)
+    .wMaxPacketSize     = EP1_SIZE,               // max packet size
+    .bInterval          = 1                       // polling intervall in ms
   },
 
   // Endpoint Descriptor: Endpoint 1 (OUT, Interrupt)
@@ -71,16 +80,6 @@ __code USB_CFG_DESCR_HID CfgDescr = {
     .bLength            = sizeof(USB_ENDP_DESCR), // size of the descriptor in bytes: 7
     .bDescriptorType    = USB_DESCR_TYP_ENDP,     // endpoint descriptor: 0x05
     .bEndpointAddress   = USB_ENDP_ADDR_EP1_OUT,  // endpoint: 1, direction: OUT (0x01)
-    .bmAttributes       = USB_ENDP_TYPE_INTER,    // transfer type: interrupt (0x03)
-    .wMaxPacketSize     = EP1_SIZE,               // max packet size
-    .bInterval          = 1                       // polling intervall in ms
-  },
-
-  // Endpoint Descriptor: Endpoint 1 (IN, Interrupt)
-  .ep1IN = {
-    .bLength            = sizeof(USB_ENDP_DESCR), // size of the descriptor in bytes: 7
-    .bDescriptorType    = USB_DESCR_TYP_ENDP,     // endpoint descriptor: 0x05
-    .bEndpointAddress   = USB_ENDP_ADDR_EP1_IN,   // endpoint: 1, direction: OUT (0x81)
     .bmAttributes       = USB_ENDP_TYPE_INTER,    // transfer type: interrupt (0x03)
     .wMaxPacketSize     = EP1_SIZE,               // max packet size
     .bInterval          = 1                       // polling intervall in ms
@@ -95,12 +94,12 @@ __code uint8_t ReportDescr[] ={
   0x09, 0x01,         // Usage (Vendor Usage 1)
   0xA1, 0x01,         // Collection (Application)
   0x15, 0x00,         //   Logical minimum value 0
-  0x26, 0xFF, 0x00,   //   Logical maximum value 255
+  0x25, 0xFF,         //   Logical maximum value 255
   0x75, 0x08,         //   Report Size: 8-bit field size
-  0x95, EP1_SIZE,     //   Report Count: max packet size
-  0x09, 0x02,         //   Usage (Vendor Usage 2)
+  0x95, 0x40,         //   Report Count: Make 64 fields
+  0x09, 0x01,         //   Usage (Vendor Usage 1)
   0x81, 0x02,         //   Input (Data,Var,Abs,No Wrap,Linear)
-  0x09, 0x03,         //   Usage (Vendor Usage 3)
+  0x09, 0x01,         //   Usage (Vendor Usage 1)
   0x91, 0x02,         //   Output (Data,Var,Abs,No Wrap,Linear)
   0xC0                // End Collection
 };

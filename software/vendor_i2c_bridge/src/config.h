@@ -30,4 +30,4 @@
 // is untested. The vendor code should not be identical to other vendor codes used,
 // the device must be declared as USB 2.0 and the maximum packet size of the EP0 
 // must be 64 bytes. Uncomment this define to enable experimental WCID feature.
-#define WCID_VENDOR_CODE    0x37
+#define WCID_VENDOR_CODE    0x5D
